@@ -1,8 +1,9 @@
+using FishNet.Object;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class PlayerMove : MonoBehaviour
+    public class PlayerMove : NetworkBehaviour
     {
         public float Speed = 12f;
         public float JumpHeight = 3f;
@@ -29,6 +30,9 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            if (!IsOwner)
+                return;
+            
             _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
                 
             if (_isGrounded && _velocity.y < 0)
